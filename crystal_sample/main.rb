@@ -1,9 +1,11 @@
-require 'bundler/inline'
+# require 'bundler/inline'
 
-gemfile do
-  source 'https://rubygems.org'
-  gem 'ffi', '~> 1.12'
-end
+# gemfile do
+#   source 'https://rubygems.org'
+#   gem 'ffi', '~> 1.12'
+# end
+
+require 'ffi'
 
 module Lib
   extend FFI::Library
@@ -17,11 +19,15 @@ module Lib
 
   ffi_lib LIB_PATH
 
-  attach_function :lib_init, [], :void
   attach_function :lib_hello, [], :void
+  attach_function :lib_add, [:int, :int], :int
 end
 
 if __FILE__ == $0
-  Lib.lib_init
+  puts "Calling lib_add"
+  result = Lib.lib_add(1, 3)
+  puts "result = #{result}"
+  puts "Calling lib_hello"
+  #Lib.lib_init
   Lib.lib_hello
 end

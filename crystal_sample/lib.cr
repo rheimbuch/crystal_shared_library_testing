@@ -1,7 +1,7 @@
-fun lib_init : Void
-  GC.init
-  argv = ["fake-program_name".to_unsafe].to_unsafe
-  LibCrystalMain.__crystal_main(1, argv)
+require "./crystal_library_runtime"
+
+fun lib_add(a : Int32, b : Int32): Int32
+  return a + b
 end
 
 fun lib_hello : Void
